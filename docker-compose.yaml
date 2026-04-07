@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  face-lock-api:
+    build: .
+    container_name: face-lock-api
+    ports:
+      - "8080:8000"
+    volumes:
+      - ./embeddings:/app/embeddings
+    restart: unless-stopped
