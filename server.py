@@ -1,8 +1,3 @@
-"""
-Face-lock backend — FastAPI
-Run: uvicorn server:app --host 0.0.0.0 --port 8000 --reload
-"""
-
 import io
 from contextlib import asynccontextmanager
 
@@ -26,24 +21,12 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Face Lock API", lifespan=lifespan)
 
-
-# ------------------------------------------------------------------ #
-#  Helpers                                                             #
-# ------------------------------------------------------------------ #
-
-
 def _read_image(upload: UploadFile) -> Image.Image:
     try:
         data = upload.file.read()
         return Image.open(io.BytesIO(data)).convert("RGB")
     except Exception as exc:
         raise HTTPException(status_code=400, detail=f"Cannot read image: {exc}")
-
-
-# ------------------------------------------------------------------ #
-#  Routes                                                              #
-# ------------------------------------------------------------------ #
-
 
 @app.get("/")
 def health():
